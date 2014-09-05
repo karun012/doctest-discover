@@ -1,12 +1,10 @@
 #doctest-discover
 
-* Do you spend time creating a doctest driver for every cabal project? 
-
 * Do you have to maintain a list of source files that cabal needs to use to run doctests?
 
-doctest-discover (inspired by hspec-discover) makes it easy to run doctests via cabal.
+doctest-discover (inspired by [hspec-discover](https://hackage.haskell.org/package/hspec-discover)) makes it easy to run doctests via [cabal](http://www.haskell.org/cabal/).
 
-The only thing you need to do is create a driver file (let's call it doctest-driver.hs) with one line:
+The only thing you need to do is create a driver file with one line (let's call it *doctest-driver.hs*):
 
 ```haskell
 {-# OPTIONS_GHC -F -pgmF doctest-discover #-}
@@ -24,5 +22,8 @@ test-suite cooler-doctests
 
 ```
 
-doctest-discover is used as a pre-processor. Since there is nothing to pre-process in the file, it builds a temporary file with the code needed to run doctests 
-via cabal.
+doctest-discover is used as a pre-processor. Since there is nothing to pre-process in the file, it builds a temporary file with the code needed to run doctests via cabal.
+
+###*Note*
+
+This is in beta. This version assumes that your source files are in a directory named **"src"**. Future versions will let you add configuration for ignoring tests (not recommended if you are into TDD :smirk: ), passing additional flags to doctest, using a different folder for your source files, etc.
