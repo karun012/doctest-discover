@@ -11,7 +11,7 @@ run = (doctest . (:) "-isrc" . dropFileExtensions . notCurrentAndParent . filter
 -- | Drops file extensions
 -- 
 -- >>> dropFileExtensions ["foo.bar", "bar.baz", "baz.qux"]
--- ["foo","bar","baz"]
+-- ["foo","bar","bar"]
 
 dropFileExtensions :: [FilePath] -> [String]
 dropFileExtensions = map dropExtension
@@ -19,7 +19,7 @@ dropFileExtensions = map dropExtension
 -- | Filters out current and parent directories 
 --
 -- >>> notCurrentAndParent ["wat", ".", "..", "wat"]
--- ["wat","wat"]
+-- ["wat","wat","nice"]
 
 notCurrentAndParent :: [FilePath] -> [FilePath]
 notCurrentAndParent = filter (`notElem` [".", ".."])
