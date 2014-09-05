@@ -5,8 +5,8 @@ import System.Directory
 import Data.List
 import System.FilePath.Posix
 
-run :: IO ()
-run = (doctest . (:) "-isrc" . dropFileExtensions . notCurrentAndParent . filterHaskellSources) =<< getDirectoryContents "src"
+generateConfig :: [FilePath] -> [String]
+generateConfig = ((:) "-isrc" . dropFileExtensions . notCurrentAndParent . filterHaskellSources) 
 
 -- | Drops file extensions
 -- 
