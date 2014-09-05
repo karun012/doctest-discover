@@ -12,7 +12,7 @@ The only thing you need to do is create a driver file (let's call it doctest-dri
 {-# OPTIONS_GHC -F -pgmF doctest-discover #-}
 ```
 
-Use this file as the main for the test-suite in your cabal file: 
+Use it as the main for the test-suite in your cabal file: 
 ```cabal
 test-suite cooler-doctests
   default-language:   Haskell2010
