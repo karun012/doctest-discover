@@ -5,13 +5,18 @@ import System.Directory
 import Data.List
 import System.FilePath.Posix
 
+-- | Generates doctest configuration
+--
+-- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"]
+-- ["-isrc","foo","bar"]
+--
 generateConfig :: [FilePath] -> [String]
 generateConfig = ((:) "-isrc" . dropFileExtensions . notCurrentAndParent . filterHaskellSources) 
 
 -- | Drops file extensions
 -- 
 -- >>> dropFileExtensions ["foo.bar", "bar.baz", "baz.qux"]
--- ["foo","bar","bar"]
+-- ["foo","bar","baz"]
 
 dropFileExtensions :: [FilePath] -> [String]
 dropFileExtensions = map dropExtension
@@ -19,7 +24,7 @@ dropFileExtensions = map dropExtension
 -- | Filters out current and parent directories 
 --
 -- >>> notCurrentAndParent ["wat", ".", "..", "wat"]
--- ["wat","wat","nice"]
+-- ["wat","wat"]
 
 notCurrentAndParent :: [FilePath] -> [FilePath]
 notCurrentAndParent = filter (`notElem` [".", ".."])
