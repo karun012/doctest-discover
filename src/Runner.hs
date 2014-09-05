@@ -1,4 +1,6 @@
-module Runner where
+module Runner (
+    generateConfig
+) where
 
 import Test.DocTest
 import System.Directory
