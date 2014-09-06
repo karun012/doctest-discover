@@ -7,6 +7,7 @@ synopsis:            Easy way to run doctests via cabal
 description:         doctest-discover provides an easy way to run doctests via cabal
 license:             PublicDomain
 license-file:        LICENSE
+homepage:            http://github.com/karun012/doctest-discover
 author:              Karun Ramakrishnan
 maintainer:          karun012@gmail.com
 category:            Testing
