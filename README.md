@@ -6,13 +6,6 @@ doctest-discover (inspired by [hspec-discover](https://hackage.haskell.org/packa
 
 doctest-discover is published on [hackage](https://hackage.haskell.org/package/doctest-discover)
 
-It has to be installed separately.
-
-```cabal
-cabal update
-cabal install doctest-discover
-```
-
 The only thing you need to do is create a driver file with one line (let's call it *doctest-driver.hs*):
 
 ```haskell
@@ -26,7 +19,7 @@ test-suite cooler-doctests
   type:               exitcode-stdio-1.0
   ghc-options:        -threaded
   main-is:            doctest-driver.hs
-  build-depends:      base >4 && <5, doctest
+  build-depends:      base >4 && <5, doctest, doctest-discover
   HS-Source-Dirs:     test
 ```
 
