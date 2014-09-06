@@ -31,5 +31,5 @@ test-suite doctests
   type:                exitcode-stdio-1.0
   ghc-options:         -threaded
   main-is:             Doctest-Main.hs
-  build-depends:       base >4 && <5, doctest
+  build-depends:       base >4 && <5, doctest-discover, doctest
   HS-Source-Dirs:      test
