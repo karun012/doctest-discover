@@ -1,4 +1,4 @@
-#doctest-discover [![build status](https://travis-ci.org/karun012/doctest-discover.png)](https://travis-ci.org/karun012/doctest-discover)
+#doctest-discover
 
 * Do you have to maintain a list of source files that cabal needs to use to run doctests?
 
