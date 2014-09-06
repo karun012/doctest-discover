@@ -1,4 +1,0 @@
-language: haskell
-notifications:
-  email: false
-
