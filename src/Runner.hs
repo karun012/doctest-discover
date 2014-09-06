@@ -2,8 +2,6 @@ module Runner (
     generateConfig
 ) where
 
-import Test.DocTest
-import System.Directory
 import Data.List
 import System.FilePath.Posix
 
