@@ -3,15 +3,23 @@ module Runner (
 ) where
 
 import Data.List
+import Config
 import System.FilePath.Posix
 
 -- | Generates doctest configuration
 --
--- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"]
+-- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] Nothing
 -- ["-isrc","foo","bar"]
 --
-generateConfig :: [FilePath] -> [String]
-generateConfig = ((:) "-isrc" . dropFileExtensions . notCurrentAndParent . filterHaskellSources) 
+-- >>> let config = Just (Config (Just ["bar.hs"]))
+-- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
+-- ["-isrc","foo"]
+--
+generateConfig :: [FilePath] -> Maybe Config -> [String]
+generateConfig files config = case config of
+                                Just (Config (Just (ignoreList))) -> ((:) "-isrc" . dropFileExtensions . filter (`notElem` ignoreList) . notCurrentAndParent . filterHaskellSources) files
+                                _ ->  ((:) "-isrc" . dropFileExtensions . notCurrentAndParent . filterHaskellSources) files
+
 
 -- | Drops file extensions
 -- 
