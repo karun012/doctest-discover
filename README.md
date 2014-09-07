@@ -1,6 +1,6 @@
 #doctest-discover
 
-* Do you have to maintain a list of source files that cabal needs to use to run doctests?
+* Do you have to maintain a list of source files that cabal needs to use to run [doctests](https://hackage.haskell.org/package/doctest)?
 
 doctest-discover (inspired by [hspec-discover](https://hackage.haskell.org/package/hspec-discover)) makes it easy to run doctests via [cabal](http://www.haskell.org/cabal/).
 
