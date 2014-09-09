@@ -15,16 +15,9 @@ main = do
                               _ -> return ""
     customConfiguration <- config <$> configFileContents
     files <- getDirectoryContents "src" 
-    let config = generateConfig files customConfiguration
-    writeFile dst (makeFileContents config)
+    let testDriverFileContents = driver files customConfiguration
+    writeFile dst testDriverFileContents
 
-makeFileContents :: [String] -> String
-makeFileContents config = unlines [
-                                "module Main where",
-                                "import Test.DocTest",
-                                "main :: IO ()",
-                                "main = doctest " ++ show config
-                           ]
 
 
 

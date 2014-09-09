@@ -1,10 +1,20 @@
 module Runner (
-    generateConfig
+    driver
 ) where
 
 import Data.List
 import Config
 import System.FilePath.Posix
+
+-- | Generates doctest driver
+--
+-- >>> let expected = unlines ["module Main where", "import Test.DocTest", "main :: IO ()", "main = doctest [\"-isrc\",\"foo\",\"bar\"]"]
+-- >>> let actual = driver ["foo.hs", "bar.hs", "baz.qux"] Nothing
+-- >>> expected == actual
+-- True
+--
+driver :: [FilePath] -> Maybe Config -> String
+driver files config = unlines $ ["module Main where", "import Test.DocTest", "main :: IO ()", "main = doctest " ++ (show $ generateConfig files config)]
 
 -- | Generates doctest configuration
 --
