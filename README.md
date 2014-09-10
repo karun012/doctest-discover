@@ -26,7 +26,7 @@ test-suite cooler-doctests
 doctest-discover is used as a pre-processor. Since there is nothing to pre-process in the file, it builds a temporary file with the code needed to run doctests via cabal.
 
 ##Configuration
-Version 0.1.0.3 allows you to specify a list of files to ignore. Create a json file with the ingore list (let's call it config.json):
+***Version 0.1.0.3*** allows you to specify a list of files to ignore. Create a json file with the ingore list (let's call it config.json):
 ```json
 {
     "ignore": ["foo.hs", "bar.hs", "baz.hs"]
@@ -38,7 +38,15 @@ Change your driver to specify the config file name
 ```haskell
 {-# OPTIONS_GHC -F -pgmF doctest-discover -optF config.json #-}
 ```
+***Version 0.1.0.4*** allows you to specify a list of source folders along with the ignore list:
+
+```json
+{
+    "ignore": ["foo.hs", "bar.hs", "baz.hs"],
+    "sourceFolders": ["src", "src/foobar", "someOtherSource"]
+}
+```
 
 ###*Note*
 
-This is in beta. This version assumes that your source files are in a directory named **"src"**. Future versions will let you add configuration for passing additional flags to doctest, using a different folder for your source files, etc.
+This is in beta. Future versions will let you add configuration for passing additional flags to doctest.
