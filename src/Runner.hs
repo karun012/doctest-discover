@@ -8,7 +8,7 @@ import System.FilePath.Posix
 
 -- | Generates doctest driver
 --
--- >>> let expected = unlines ["module Main where", "import Test.DocTest", "main :: IO ()", "main = doctest [\"-isrc\",\"foo\",\"bar\"]"]
+-- >>> let expected = unlines ["module Main where", "import Test.DocTest", "main :: IO ()", "main = doctest [\"-i/src\",\"foo.hs\",\"bar.hs\"]"]
 -- >>> let actual = driver ["foo.hs", "bar.hs", "baz.qux"] Nothing
 -- >>> expected == actual
 -- True
@@ -19,33 +19,25 @@ driver files config = unlines $ ["module Main where", "import Test.DocTest", "ma
 -- | Generates doctest configuration
 --
 -- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] Nothing
--- ["-isrc","foo","bar"]
+-- ["-i/src","foo.hs","bar.hs"]
 --
 -- >>> let config = Just (Config (Just ["bar.hs"]) Nothing)
 -- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
--- ["-isrc","foo"]
+-- ["-i/src","foo.hs"]
 --
 -- >>> let config = Just (Config Nothing (Just ["qux"]))
 -- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
--- ["-iqux","foo","bar"]
+-- ["-i/qux","foo.hs","bar.hs"]
 --
 -- >>> let config = Just (Config (Just ["bar.hs"]) (Just ["qux"]))
 -- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
--- ["-iqux","foo"]
+-- ["-i/qux","foo.hs"]
 --
 generateConfig :: [FilePath] -> Maybe Config -> [String]
-generateConfig files (Just (Config Nothing (Just sourceFolders))) = ((++) (map ("-i"++) sourceFolders) . dropFileExtensions . notCurrentAndParent . filterHaskellSources) files
-generateConfig files (Just (Config (Just ignoreList) Nothing)) = ((:) "-isrc" . dropFileExtensions . filter (`notElem` ignoreList) . notCurrentAndParent . filterHaskellSources) files
-generateConfig files (Just (Config (Just ignoreList) (Just sourceFolders))) = ((++) (map ("-i"++) sourceFolders) . dropFileExtensions . filter (`notElem` ignoreList) . notCurrentAndParent . filterHaskellSources) files
-generateConfig files _ = ((:) "-isrc" . dropFileExtensions . notCurrentAndParent . filterHaskellSources) files
-
--- | Drops file extensions
--- 
--- >>> dropFileExtensions ["foo.bar", "bar.baz", "baz.qux"]
--- ["foo","bar","baz"]
-
-dropFileExtensions :: [FilePath] -> [String]
-dropFileExtensions = map dropExtension
+generateConfig files (Just (Config Nothing (Just sourceFolders))) = ((++) (map ("-i/"++) sourceFolders) . notCurrentAndParent . filterHaskellSources) files
+generateConfig files (Just (Config (Just ignoreList) Nothing)) = ((:) "-i/src" . filter (`notElem` ignoreList) . notCurrentAndParent . filterHaskellSources) files
+generateConfig files (Just (Config (Just ignoreList) (Just sourceFolders))) = ((++) (map ("-i/"++) sourceFolders) . filter (`notElem` ignoreList) . notCurrentAndParent . filterHaskellSources) files
+generateConfig files _ = ((:) "-i/src" . notCurrentAndParent . filterHaskellSources) files
 
 -- | Filters out current and parent directories 
 --
