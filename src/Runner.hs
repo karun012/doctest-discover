@@ -21,15 +21,23 @@ driver files config = unlines $ ["module Main where", "import Test.DocTest", "ma
 -- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] Nothing
 -- ["-isrc","foo","bar"]
 --
--- >>> let config = Just (Config (Just ["bar.hs"]))
+-- >>> let config = Just (Config (Just ["bar.hs"]) Nothing)
 -- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
 -- ["-isrc","foo"]
 --
+-- >>> let config = Just (Config Nothing (Just ["qux"]))
+-- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
+-- ["-iqux","foo","bar"]
+--
+-- >>> let config = Just (Config (Just ["bar.hs"]) (Just ["qux"]))
+-- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
+-- ["-iqux","foo"]
+--
 generateConfig :: [FilePath] -> Maybe Config -> [String]
-generateConfig files config = case config of
-                                Just (Config (Just (ignoreList))) -> ((:) "-isrc" . dropFileExtensions . filter (`notElem` ignoreList) . notCurrentAndParent . filterHaskellSources) files
-                                _ ->  ((:) "-isrc" . dropFileExtensions . notCurrentAndParent . filterHaskellSources) files
-
+generateConfig files (Just (Config Nothing (Just sourceFolders))) = ((++) (map ("-i"++) sourceFolders) . dropFileExtensions . notCurrentAndParent . filterHaskellSources) files
+generateConfig files (Just (Config (Just ignoreList) Nothing)) = ((:) "-isrc" . dropFileExtensions . filter (`notElem` ignoreList) . notCurrentAndParent . filterHaskellSources) files
+generateConfig files (Just (Config (Just ignoreList) (Just sourceFolders))) = ((++) (map ("-i"++) sourceFolders) . dropFileExtensions . filter (`notElem` ignoreList) . notCurrentAndParent . filterHaskellSources) files
+generateConfig files _ = ((:) "-isrc" . dropFileExtensions . notCurrentAndParent . filterHaskellSources) files
 
 -- | Drops file extensions
 -- 
