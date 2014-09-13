@@ -42,7 +42,8 @@ Change your driver to specify the config file name
 {-# OPTIONS_GHC -F -pgmF doctest-discover -optF config.json #-}
 ```
 
-***Version 0.1.0.4*** allows you to specify a list of source folders along with the ignore list:
+###Source folders
+Here's how you specify a list of source folders:
 
 ```json
 {
