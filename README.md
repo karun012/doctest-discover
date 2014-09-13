@@ -26,9 +26,9 @@ test-suite cooler-doctests
 doctest-discover is used as a pre-processor. Since there is nothing to pre-process in the file, it builds a temporary file with the code needed to run doctests via cabal.
 
 ##Configuration
-Make sure you put the config file the root directory of your project. Configuration can be specified in a json file.
+Configuration has to be specified in a json file. Make sure you put the config file in the root directory of your project. 
 
-To use a config file, change your driver to specify the config file name
+To use a config file, change your driver to add the config file name with the -optF flag.
 ```haskell
 {-# OPTIONS_GHC -F -pgmF doctest-discover -optF config.json #-}
 ```
@@ -41,8 +41,6 @@ To use a config file, change your driver to specify the config file name
 ```
 
 ###Source folders
-Here's how you specify a list of source folders:
-
 ```json
 {
     "ignore": ["foo.hs", "bar.hs", "baz.hs"],
