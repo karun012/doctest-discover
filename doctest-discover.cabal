@@ -1,5 +1,5 @@
 name:                doctest-discover
-version:             0.1.0.4
+version:             0.1.0.5
 synopsis:            Easy way to run doctests via cabal
 description:         doctest-discover provides an easy way to run doctests via cabal
 license:             PublicDomain
@@ -13,12 +13,12 @@ cabal-version:       >=1.10
 
 library
   default-language:    Haskell2010
-  build-depends:       base >=4.6 && <4.7, doctest, directory, filepath, temporary, aeson, bytestring
+  build-depends:       base >=4.6 && <4.8, doctest, directory, filepath, temporary, aeson, bytestring
   HS-Source-Dirs:      src
 
 executable doctest-discover
   default-language:    Haskell2010
-  build-depends:       base >=4.6 && <4.7, doctest, directory, filepath, temporary, aeson, bytestring
+  build-depends:       base >=4.6 && <4.8, doctest, directory, filepath, temporary, aeson, bytestring
   main-is:             Main.hs 
   other-modules:       Runner, Config
   HS-Source-Dirs:      src
