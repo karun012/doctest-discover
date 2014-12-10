@@ -47,7 +47,3 @@ To use a config file, change your driver to add the config file name with the -o
     "sourceFolders": ["src", "src/foobar", "someOtherSource"]
 }
 ```
-
-###*Note*
-
-This is in beta. Future versions will let you add configuration for passing additional flags to doctest.
