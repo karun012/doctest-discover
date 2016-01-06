@@ -11,6 +11,7 @@ cabal-dev
 .hpc
 .hsenv
 .cabal-sandbox/
+.stack-work/
 cabal.sandbox.config
 cabal.config
 *.prof
