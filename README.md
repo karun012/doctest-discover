@@ -47,3 +47,6 @@ To use a config file, change your driver to add the config file name with the -o
     "sourceFolders": ["src", "src/foobar", "someOtherSource"]
 }
 ```
+
+##Contributors
+[Richard Cook](https://github.com/rcook)
