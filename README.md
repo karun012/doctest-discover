@@ -1,4 +1,4 @@
-#doctest-discover
+# doctest-discover
 
 * Do you have to maintain a list of source files that cabal needs to use to run [doctests](https://hackage.haskell.org/package/doctest)?
 
@@ -25,7 +25,7 @@ test-suite cooler-doctests
 
 doctest-discover is used as a pre-processor. Since there is nothing to pre-process in the file, it builds a temporary file with the code needed to run doctests via cabal.
 
-##Configuration
+## Configuration
 Configuration has to be specified in a json file. Make sure you put the config file in the root directory of your project. 
 
 To use a config file, change your driver to add the config file name with the -optF flag.
@@ -33,14 +33,14 @@ To use a config file, change your driver to add the config file name with the -o
 {-# OPTIONS_GHC -F -pgmF doctest-discover -optF config.json #-}
 ```
 
-###Ignoring files
+### Ignoring files
 ```json
 {
     "ignore": ["foo.hs", "bar.hs", "baz.hs"]
 }
 ```
 
-###Source folders
+### Source folders
 ```json
 {
     "ignore": ["foo.hs", "bar.hs", "baz.hs"],
@@ -48,5 +48,5 @@ To use a config file, change your driver to add the config file name with the -o
 }
 ```
 
-##Contributors
+## Contributors
 [Richard Cook](https://github.com/rcook)
