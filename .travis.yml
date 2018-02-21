@@ -11,8 +11,17 @@ git:
 
 cache:
   directories:
-  - "$HOME/.stack"
-  - "$HOME/build/karun012/doctest-discover/.stack-work"
+  - $HOME/.stack
+  - $HOME/build/karun012/doctest-discover/.stack-work
+  - $HOME/.cabal/packages
+  - $HOME/.cabal/store
+  - $HOME/.cabal/bin
+
+  - $HOME/.stack/bin
+  - $HOME/.stack/precompiled
+  - $HOME/.stack/programs
+  - $HOME/.stack/setup-exe-cache
+  - $HOME/.stack/snapshots
 
 
 addons:
@@ -27,7 +36,7 @@ addons:
 before_install:
 
   - mkdir -p ~/.local/bin
-  - export PATH="$HOME/.local/bin:$PATH"
+  - export PATH="$HOME/.local/bin:$HOME/.cabal/:$PATH"
   - travis_retry curl -L 'https://www.stackage.org/stack/linux-x86_64' | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
   - stack --version
 
@@ -38,7 +47,7 @@ install:
   - stack ghc -- --version
 
   - stack build --only-dependencies --no-terminal
-  - stack build --test 
+  - stack build --test
 
 
 script:
