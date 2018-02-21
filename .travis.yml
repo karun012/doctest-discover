@@ -1,39 +1,49 @@
 notifications:
   email: false
 
-sudo: false
-
+sudo: true
 language: haskell
+
+
+git:
+  depth: 5
+
 
 cache:
   directories:
-  - $HOME/.stack
+  - "$HOME/.stack"
+  - "$HOME/build/karun012/doctest-discover/.stack-work"
+
 
 addons:
   apt:
     sources:
-      - sourceline: 'ppa:hvr/ghc' # PPA of Haskell packages
+      - sourceline: 'ppa:hvr/ghc'
     packages:
-      - libgmp-dev           # required by cabal
-      - cabal-install-2.0    # required by GHC 8.x
+      - libgmp-dev
+      - cabal-install-2.0
 
-ghc:
-  - 8.0
 
-before_install
-  - mkdir -p “$HOME/.local/bin”
+before_install:
+
+  - mkdir -p ~/.local/bin
   - export PATH="$HOME/.local/bin:$PATH"
-  - travis_retry curl -L 'https://www.stackage.org/stack/linux-x86_64' | tar xz --wildcards --strip-components=1 -C "$HOME/.local/bin" '*/stack'
+  - travis_retry curl -L 'https://www.stackage.org/stack/linux-x86_64' | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
   - stack --version
 
-install
+
+install:
+
   - travis_wait 30 stack setup --no-terminal
   - stack ghc -- --version
-  - travis_wait 40 stack build --no-terminal --only-dependencies
-  - travis_wait 40 stack build --no-terminal --test 
+
+  - travis_wait 40 stack build --only-dependencies --no-terminal
+  - travis_wait 40 stack build --test --bench --no-run-tests --no-run-benchmarks --no-terminal
+
 
 script:
-  - travis_wait 40 stack build --no-terminal --test
+
+  - travis_wait 40 stack build --test --no-terminal
 
 
 deploy:
