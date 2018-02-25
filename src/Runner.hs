@@ -25,17 +25,21 @@ driver files config = unlines $ ["module Main where", "import Test.DocTest", "ma
 -- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] Nothing
 -- ["-isrc","foo.hs","bar.hs"]
 --
--- >>> let config = Just (Config (Just ["bar.hs"]) Nothing)
+-- >>> let config = Just (Config (Just ["bar.hs"]) Nothing Nothing)
 -- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
 -- ["-isrc","foo.hs"]
 --
--- >>> let config = Just (Config Nothing (Just ["qux"]))
+-- >>> let config = Just (Config Nothing (Just ["qux"]) Nothing)
 -- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
 -- ["-iqux","foo.hs","bar.hs"]
 --
--- >>> let config = Just (Config (Just ["bar.hs"]) (Just ["qux"]))
+-- >>> let config = Just (Config (Just ["bar.hs"]) (Just ["qux"]) Nothing)
 -- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
 -- ["-iqux","foo.hs"]
+--
+-- >>> let config = Just (Config (Just ["bar.hs"]) (Just ["qux"]) (Just ["-some", "--doctest options"]))
+-- >>> generateConfig ["foo.hs", "bar.hs", "baz.qux"] config
+-- ["-iqux","foo.hs","-some","--doctest","options"]
 --
 generateConfig :: [FilePath] -> Maybe Config -> [String]
 generateConfig files (Just Config {..})
