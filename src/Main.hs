@@ -16,9 +16,7 @@ main = do
                               (configFile : _) -> readFile configFile
                               _ -> return ""
     customConfiguration <- config <$> configFileContents
-    let sources = case customConfiguration of
-                    Just (Config _ (Just sourceFolders)) -> sourceFolders
-                    _ -> ["src"]
+    let sources = fromMaybe ["src"] $ customConfiguration >>= sourceFolders
     files <- sequence $ map getAbsDirectoryContents sources
     let testDriverFileContents = driver (concat files) customConfiguration
     writeFile dst testDriverFileContents

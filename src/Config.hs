@@ -8,14 +8,16 @@ import qualified Data.ByteString.Lazy.Char8 as B
 
 data Config = Config {
     ignore :: Maybe [String],
-    sourceFolders :: Maybe [String]
+    sourceFolders :: Maybe [String],
+    doctestOptions :: Maybe [String]
 } deriving (Show)
 
 instance FromJSON Config where
     parseJSON (Object v) = 
         Config <$> 
         (v .:? "ignore") <*>
-        (v .:? "sourceFolders")
+        (v .:? "sourceFolders") <*>
+        (v .:? "doctestOptions")
 
 -- | Parses config json as string to the Config type
 --
