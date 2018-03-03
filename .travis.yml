@@ -1,59 +1,23 @@
 notifications:
   email: false
 
-sudo: true
+sudo: false
 language: haskell
-
-
-git:
-  depth: 5
-
 
 cache:
   directories:
+  - $HOME/.ghc
+  - $HOME/.cabal
   - $HOME/.stack
-  - $HOME/build/karun012/doctest-discover/.stack-work
-  - $HOME/.cabal/packages
-  - $HOME/.cabal/store
-  - $HOME/.cabal/bin
-
-  - $HOME/.stack/bin
-  - $HOME/.stack/precompiled
-  - $HOME/.stack/programs
-  - $HOME/.stack/setup-exe-cache
-  - $HOME/.stack/snapshots
-
-
-addons:
-  apt:
-    sources:
-      - sourceline: 'ppa:hvr/ghc'
-    packages:
-      - libgmp-dev
-      - cabal-install-2.0
-
 
 before_install:
-
-  - mkdir -p ~/.local/bin
-  - export PATH="$HOME/.local/bin:$HOME/.cabal/:$PATH"
-  - travis_retry curl -L 'https://www.stackage.org/stack/linux-x86_64' | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
-  - stack --version
-
-
-install:
-
-  - stack setup --no-terminal
-  - stack ghc -- --version
-
-  - stack build --only-dependencies --no-terminal
-  - stack build --test
-
+# Download and unpack the stack executable
+- mkdir -p ~/.local/bin
+- export PATH=$HOME/.local/bin:$PATH
+- travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
 
 script:
-
-  - stack build --test --no-terminal
-
+- stack build --test --no-terminal --install-ghc
 
 deploy:
   provider: hackage
