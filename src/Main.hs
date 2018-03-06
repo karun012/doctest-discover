@@ -25,8 +25,8 @@ main = do
 --
 -- >>> :m +Data.List
 -- >>> prefix <- getCurrentDirectory
--- >>> map (stripPrefix prefix) <$> getAbsDirectoryContents "example"
--- [Just "/example/Foo/Bar.hs",Just "/example/Foo.hs"]
+-- >>> map (stripPrefix prefix) <$> getAbsDirectoryContents "test/example"
+-- [Just "/test/example/Foo/Bar.hs",Just "/test/example/Foo.hs"]
 --
 getAbsDirectoryContents :: FilePath -> IO [FilePath]
 getAbsDirectoryContents dir = do
