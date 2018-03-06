@@ -4,6 +4,7 @@ import System.Environment
 import Control.Applicative 
 import Control.Monad
 import Data.Maybe (fromMaybe)
+import Data.List (sort)
 import Runner
 import Config
 import System.Directory
@@ -26,7 +27,7 @@ main = do
 -- >>> :m +Data.List
 -- >>> prefix <- getCurrentDirectory
 -- >>> map (stripPrefix prefix) <$> getAbsDirectoryContents "test/example"
--- [Just "/test/example/Foo/Bar.hs",Just "/test/example/Foo.hs"]
+-- [Just "/test/example/Foo.hs",Just "/test/example/Foo/Bar.hs"]
 --
 getAbsDirectoryContents :: FilePath -> IO [FilePath]
 getAbsDirectoryContents dir = do
@@ -37,4 +38,4 @@ getAbsDirectoryContents dir = do
         if isDir
             then getAbsDirectoryContents canonicalized
             else return [canonicalized]
-    return $ concat paths'
+    return $ sort $ concat paths'
