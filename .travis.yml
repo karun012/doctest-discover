@@ -6,6 +6,10 @@ language: nix
 cache:
   directories:
     - $HOME/.stack
+    - /nix/store
+
+before_install:
+  - nix-env -i stack
 
 install:
   - stack install --no-terminal --install-ghc --only-dependencies
