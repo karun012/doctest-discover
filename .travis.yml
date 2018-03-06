@@ -19,4 +19,4 @@ script:
   - stack test --no-terminal 
 
 after_success:
-  - stack upload
+  - stack upload .

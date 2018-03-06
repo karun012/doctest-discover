@@ -1,5 +1,5 @@
 name:                doctest-discover
-version:             0.1.0.8
+version:             0.1.0.9
 synopsis:            Easy way to run doctests via cabal
 description:         doctest-discover provides an easy way to run doctests via cabal
 license:             PublicDomain
