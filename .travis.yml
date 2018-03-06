@@ -12,6 +12,8 @@ before_install:
   - nix-env -i stack
 
 script:
+  - stack install
+  - stack build
   - stack test --nix --no-nix-pure --no-terminal 
 
 deploy:
