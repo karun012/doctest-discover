@@ -6,20 +6,13 @@ language: nix
 cache:
   directories:
     - $HOME/.stack
-    - /nix/store
 
-before_install:
-  - nix-env -i stack
+install:
+  - stack install --no-terminal --install-ghc --only-dependencies
 
 script:
-  - stack install
-  - stack build
-  - stack test --nix --no-nix-pure --no-terminal 
+  - stack build 
+  - stack test --no-terminal 
 
-deploy:
-  provider: hackage
-  username: karun012
-  password:
-    secure: GrFiGoZYG9pcdm8dfle8eHAgDPiR21NkkLj28aKqWvjCoTaiML44dQK/5/llfWdAjxloBZp4NMxYeuCkeycyVsJWEfyTilxc5u3gwDcX6Q2Fi3Qc5SBwPmympUp/JCN17aJUHbOjzeCW20zrVyNIzJCHYXoS+Q7ZXBVARTK+pMI=
-  on:
-    repo: karun012/doctest-discover
+after_success:
+  - stack upload
