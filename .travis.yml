@@ -18,5 +18,3 @@ script:
   - stack build 
   - stack test --no-terminal 
 
-after_success:
-  - stack upload .
