@@ -1,7 +1,7 @@
 module Main where
 
 import System.Environment
-import Control.Applicative 
+import Control.Applicative
 import Control.Monad
 import Data.Maybe (fromMaybe)
 import Data.List (sort)
@@ -18,7 +18,7 @@ main = do
                               _ -> return ""
     customConfiguration <- config <$> configFileContents
     let sources = fromMaybe ["src"] $ customConfiguration >>= sourceFolders
-    files <- sequence $ map getAbsDirectoryContents sources
+    files <- mapM getAbsDirectoryContents sources
     let testDriverFileContents = driver (concat files) customConfiguration
     writeFile dst testDriverFileContents
 

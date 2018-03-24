@@ -18,7 +18,7 @@ import System.FilePath.Posix
 -- True
 --
 driver :: [FilePath] -> Maybe Config -> String
-driver files config = unlines $ ["module Main where", "import Test.DocTest", "main :: IO ()", "main = doctest " ++ (show $ generateConfig files config)]
+driver files config = unlines ["module Main where", "import Test.DocTest", "main :: IO ()", "main = doctest " ++ show (generateConfig files config)]
 
 -- | Generates doctest configuration
 --
@@ -43,13 +43,13 @@ driver files config = unlines $ ["module Main where", "import Test.DocTest", "ma
 --
 generateConfig :: [FilePath] -> Maybe Config -> [String]
 generateConfig files (Just Config {..})
-    =  concat [ maybe ["-isrc"] (map ("-i" ++)) $ sourceFolders
+    =  concat [ maybe ["-isrc"] (map ("-i" ++)) sourceFolders
               , nub . filter (`notElem` fromMaybe [] ignore) . notCurrentAndParent . filterHaskellSources $ files
               ]
-    ++ maybe [] (concat . map words) doctestOptions
+    ++ maybe [] (concatMap words) doctestOptions
 generateConfig files _ = ((:) "-isrc" . notCurrentAndParent . filterHaskellSources) files
 
--- | Filters out current and parent directories 
+-- | Filters out current and parent directories
 --
 -- >>> notCurrentAndParent ["wat", ".", "..", "wat"]
 -- ["wat","wat"]
