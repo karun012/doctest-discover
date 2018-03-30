@@ -23,7 +23,7 @@ library
 executable doctest-discover
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5, doctest, directory, filepath, aeson, bytestring
-  main-is:             Main.hs 
+  main-is:             Main.hs
   other-modules:       Runner, Config
   HS-Source-Dirs:      src
 
