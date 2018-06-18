@@ -1,0 +1,4 @@
+{
+    "sourceFolders": ["test", "test/example-with-dotfiles/.config"],
+    "ignore": ["test/example-with-dotfiles/Baz.hs"]
+}
