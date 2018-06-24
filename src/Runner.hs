@@ -12,13 +12,31 @@ import System.FilePath.Posix
 
 -- | Generates doctest driver
 --
--- >>> let expected = unlines ["module Main where", "import Test.DocTest", "main :: IO ()", "main = doctest [\"-isrc\",\"foo.hs\",\"bar.hs\"]"]
--- >>> let actual = driver ["foo.hs", "bar.hs", "baz.qux"] Nothing
--- >>> expected == actual
--- True
+-- >>> putStrLn $ driver ["foo.hs", "bar.hs", "baz.qux"] Nothing
+-- module Main where
+-- import Test.DocTest
+-- main :: IO ()
+-- main = doctest
+--     [ "-isrc"
+--     , "foo.hs"
+--     , "bar.hs"
+--     ]
+-- <BLANKLINE>
 --
 driver :: [FilePath] -> Maybe Config -> String
-driver files config = unlines $ ["module Main where", "import Test.DocTest", "main :: IO ()", "main = doctest " ++ (show $ generateConfig files config)]
+driver files config = unlines
+    [ "module Main where"
+    , "import Test.DocTest"
+    , "main :: IO ()"
+    , "main = doctest"
+    ] ++ (renderList 1 $ generateConfig files config)
+  where
+    renderList :: Show a => Int -> [a] -> String
+    renderList indent xs =
+        let (line:lines) = show <$> xs
+            lines' = ("[ " ++ line) : ((", " ++) <$> lines) ++ ["]"]
+        in  unlines $ indentOne indent <$> lines'
+    indentOne indent = (replicate (4 * indent) ' ' ++)
 
 -- | Generates doctest configuration
 --
