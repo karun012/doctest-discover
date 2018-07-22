@@ -10,6 +10,7 @@ maintainer:          karun012@gmail.com
 category:            Testing
 build-type:          Simple
 cabal-version:       >=1.10
+extra-source-files:  config.json
 
 source-repository head
   type: git
