@@ -29,6 +29,47 @@ readConfig x = config <$> configFileContents
     configFileContents = fromMaybe (return "") (readFile <$> x)
 
 -- | Given a configuration, build a driver.
+--
+-- Dotfiles are not included by default:
+--
+-- >>> :{
+--      do
+--          x <- buildDriverFileContents $ Just Config
+--              { sourceFolders = Just ["test/example-with-dotfiles"]
+--              , ignore = Nothing
+--              , doctestOptions = Nothing
+--              }
+--          putStr x
+-- :}
+-- module Main where
+-- import Test.DocTest
+-- main :: IO ()
+-- main = doctest
+--     [ "-itest/example-with-dotfiles"
+--     , ".../doctest-discover/test/example-with-dotfiles/Baz.hs"
+--     ]
+--
+-- But they are included if specified explicitly:
+--
+-- >>> :{
+--      do
+--          x <- buildDriverFileContents $ Just Config
+--              { sourceFolders = Just [ "test/example-with-dotfiles"
+--                                     , "test/example-with-dotfiles/.config"]
+--              , ignore = Nothing
+--              , doctestOptions = Nothing
+--              }
+--          putStr x
+-- :}
+-- module Main where
+-- import Test.DocTest
+-- main :: IO ()
+-- main = doctest
+--     [ "-itest/example-with-dotfiles"
+--     , "-itest/example-with-dotfiles/.config"
+--     , ".../doctest-discover/test/example-with-dotfiles/Baz.hs"
+--     , ".../doctest-discover/test/example-with-dotfiles/.config/Foo.hs"
+--     ]
 
 buildDriverFileContents :: Maybe Config -> IO String
 buildDriverFileContents x = do
