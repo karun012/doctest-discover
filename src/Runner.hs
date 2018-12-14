@@ -27,6 +27,7 @@ driver :: [FilePath] -> Maybe Config -> String
 driver files config = unlines
     [ "module Main where"
     , "import Test.DocTest"
+    , "import Prelude"
     , "main :: IO ()"
     , "main = doctest"
     ] ++ (renderList 1 $ generateConfig files config)
@@ -67,7 +68,7 @@ generateConfig files (Just Config {..})
     ++ maybe [] (concat . map words) doctestOptions
 generateConfig files _ = ((:) "-isrc" . notCurrentAndParent . filterHaskellSources) files
 
--- | Filters out current and parent directories 
+-- | Filters out current and parent directories
 --
 -- >>> notCurrentAndParent ["wat", ".", "..", "wat"]
 -- ["wat","wat"]
