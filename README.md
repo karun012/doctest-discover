@@ -1,4 +1,4 @@
-#PROJECT NO LONGER MAINTAINED. MIGHT CONSIDER A REWRITE IN THE FUTURE
+# PROJECT NO LONGER MAINTAINED. MIGHT CONSIDER A REWRITE IN THE FUTURE
 
 # doctest-discover [![build status](https://travis-ci.org/karun012/doctest-discover.png)](https://travis-ci.org/karun012/doctest-discover)
 
